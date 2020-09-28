@@ -10,24 +10,18 @@
 </head>
 <body>
 <%
-if(request.getParameter("boardNo") == null || request.getParameter("boardPw") == null) {
+if(request.getParameter("boardNo") == null) {
     response.sendRedirect(request.getContextPath()+"/board/boardList.jsp");
 } else {
     int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-    System.out.println("boardNo :"+boardNo);
-    String boardPw = request.getParameter("boardPw");
-    System.out.println("boardPw :"+boardPw);
     BoardVO board = new BoardVO();
     board.setBoardNo(boardNo);
-    board.setBoardPw(boardPw);
     
     BoardDAO boardDao = new BoardDAO();
     
-    if(boardDao.deleteBoard(board)==1){
-        response.sendRedirect(request.getContextPath()+"/board/boardList.jsp");
-    } else {
-        response.sendRedirect(request.getContextPath()+"/board/boardRemoveForm.jsp?boardNo="+boardNo);
-    }
+    boardDao.deleteBoard(board);
+    
+    response.sendRedirect(request.getContextPath()+"/board/boardList.jsp");
 }
 %>
 </body>

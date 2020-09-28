@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//github 테스트
 public class BoardDAO {
 	//Mysql 8이상은 드라이버 경로가 cj가붙음
 	private final String driverClassName = "com.mysql.cj.jdbc.Driver";
@@ -21,14 +23,13 @@ public class BoardDAO {
         int rowCount = 0;
         Connection connection = null;
         PreparedStatement statement = null;
-        String sql = "UPDATE board SET board_title=?, board_content=? WHERE board_no=? AND board_pw=?";
+        String sql = "UPDATE board SET board_title=?, board_content=? WHERE board_no=?";
         try {
             connection = this.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setString(1,board.getBoardTitle());
             statement.setString(2,board.getBoardContent());
             statement.setInt(3,board.getBoardNo());
-            statement.setString(4,board.getBoardPw());
             rowCount = statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,12 +44,11 @@ public class BoardDAO {
         int rowCount = 0;
         Connection connection = null;
         PreparedStatement statement = null;
-        String sql = "DELETE FROM board WHERE board_no=? AND board_pw=?";
+        String sql = "DELETE FROM board WHERE board_no=?";
         try {
             connection = this.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1,board.getBoardNo());
-            statement.setString(2,board.getBoardPw());
             rowCount = statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class BoardDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
-        String sql = "SELECT board_title, board_content, board_user, board_date FROM board WHERE board_no=?";
+        String sql = "SELECT board.board_title, board.board_content, board.board_date, user.user_id FROM board,user WHERE board.user_no = user.user_no AND board_no = ?";
         try {
             connection = this.getConnection();
             statement = connection.prepareStatement(sql);
@@ -75,8 +75,8 @@ public class BoardDAO {
                 board.setBoardNo(boardNo);
                 board.setBoardTitle(resultset.getString("board_title"));
                 board.setBoardContent(resultset.getString("board_content"));
-                board.setBoardUser(resultset.getString("board_user"));
                 board.setBoardDate(resultset.getString("board_date"));
+                board.setUserId(resultset.getString("user_id"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +92,7 @@ public class BoardDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
-        String sql = "SELECT board_no, board_title, board_user, board_date FROM board ORDER BY board_date DESC LIMIT ?, ?";
+        String sql = "SELECT board.board_no, board.board_title, board.board_date, user.user_id FROM board,user WHERE board.user_no = user.user_no ORDER BY board.board_date DESC LIMIT ?, ?";
         try {
             connection = this.getConnection();
             statement = connection.prepareStatement(sql);
@@ -103,8 +103,8 @@ public class BoardDAO {
             	BoardVO board = new BoardVO();
                 board.setBoardNo(resultset.getInt("board_no"));
                 board.setBoardTitle(resultset.getString("board_title"));
-                board.setBoardUser(resultset.getString("board_user"));
                 board.setBoardDate(resultset.getString("board_date"));
+                board.setUserId(resultset.getString("user_id"));
                 list.add(board);
             }
         } catch (Exception e) {
@@ -142,14 +142,13 @@ public class BoardDAO {
         int rowCount = 0;
         Connection connection = null;
         PreparedStatement statement = null;
-        String sql = "INSERT INTO board(board_pw, board_title, board_content, board_user, board_date) values(?,?,?,?,now())";
+        String sql = "INSERT INTO board(user_no, board_title, board_content, board_date) values(?,?,?,now())";
         try {
             connection = this.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setString(1,board.getBoardPw());
+            statement.setInt(1,board.getUserNo());
             statement.setString(2,board.getBoardTitle());
             statement.setString(3,board.getBoardContent());
-            statement.setString(4,board.getBoardUser());
             rowCount = statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

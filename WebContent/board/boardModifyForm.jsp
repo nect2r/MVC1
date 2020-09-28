@@ -14,15 +14,12 @@ if(request.getParameter("boardNo") == null) {
     response.sendRedirect(request.getContextPath()+"/board/boardList.jsp");
 } else {
     int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-    System.out.println("boardModify param boardNo:"+boardNo);
     BoardDAO boardDao = new BoardDAO();
     BoardVO board = boardDao.selectBoardByKey(boardNo);
 %>    
     <form action="<%=request.getContextPath()%>/board/boardModifyAction.jsp" method="post">
         <div>boardNo</div>
         <div><input name="boardNo" value="<%=board.getBoardNo()%>" type="text" readonly="readonly"/></div>
-        <div>비밀번호확인: </div>
-        <div><input name="boardPw" id="boardPw" type="password"/></div>
         <div>boardTitle : </div>
         <div><input name="boardTitle" value="<%=board.getBoardTitle()%>" id="boardTitle" type="text"/></div>
         <div>boardContent : </div>

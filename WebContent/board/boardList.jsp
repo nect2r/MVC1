@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
@@ -10,6 +11,17 @@
 <title>boardList</title>
 </head>
 <body>
+<h1>
+	<c:choose>
+		<c:when test="${not empty sessionScope.user.userNo}">
+			${sessionScope.user.userId }님 환영합니다.<br/>
+			<a href="<%=request.getContextPath()%>/user/userLogoutAction.jsp">로그아웃</a>
+		</c:when>
+		<c:when test="${empty sessionScope.user.userNo}">
+			<a href="<%=request.getContextPath()%>/user/userLoginForm.jsp">로그인</a>
+		</c:when>
+	</c:choose>
+</h1>
 <h1>boardList</h1>
 <%
 int currentPage = 1;
@@ -26,9 +38,9 @@ List<BoardVO> list = boardDao.selectBoardListPerPage(beginRow, pagePerRow);
     <table border="1">
         <thead>
             <tr>
-                <th>boardTitle</th>
-                <th>boardUser</th>
-                <th>boardDate</th>
+                <th>글쓴이</th>
+                <th>제목</th>
+                <th>날짜</th>
             </tr>
         </thead>
         <tbody>
@@ -36,8 +48,8 @@ List<BoardVO> list = boardDao.selectBoardListPerPage(beginRow, pagePerRow);
             for(BoardVO b : list) {
 %>
                 <tr>
+                    <td><%=b.getUserId()%></td>
                     <td><a href="<%=request.getContextPath()%>/board/boardView.jsp?boardNo=<%=b.getBoardNo()%>"><%=b.getBoardTitle()%></a></td>
-                    <td><%=b.getBoardUser()%></td>
                     <td><%=b.getBoardDate()%></td>
                 </tr>
 <%        

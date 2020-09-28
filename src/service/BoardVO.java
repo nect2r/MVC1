@@ -2,23 +2,24 @@ package service;
 
 public class BoardVO {
 	private int boardNo;
-	private String boardPw;
+	private int userNo;
+	private String userId;
 	private String boardTitle;
 	private String boardContent;
-	private String boardUser;
 	private String boardDate;
 	
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getBoardNo() {
 		return boardNo;
 	}
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
-	}
-	public String getBoardPw() {
-		return boardPw;
-	}
-	public void setBoardPw(String boardPw) {
-		this.boardPw = boardPw;
 	}
 	public String getBoardTitle() {
 		return boardTitle;
@@ -32,16 +33,17 @@ public class BoardVO {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
-	public String getBoardUser() {
-		return boardUser;
-	}
-	public void setBoardUser(String boardUser) {
-		this.boardUser = boardUser;
-	}
 	public String getBoardDate() {
 		return boardDate;
 	}
 	public void setBoardDate(String boardDate) {
 		this.boardDate = boardDate;
 	}
+	public int getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+	
 }
