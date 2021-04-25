@@ -1,4 +1,4 @@
-package service;
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import vo.BoardVO;
 
 
 //github 테스트
@@ -86,13 +88,33 @@ public class BoardDAO {
         return board;
     }
     
+	  //2021-04-24 조회수 기능 추가 이준수
+	  // 테이블 : board , 기능 : 한 페이지 클릭시 조회수 증가
+	  public int updateBoardByViewUp(int boardNo) {
+		  int rowCount = 0;
+	      Connection connection = null;
+	      PreparedStatement statement = null;
+	      String sql = "UPDATE board SET board_view = IFNULL(board_view,0) + 1 WHERE board_no = ?";
+	      try {
+	          connection = this.getConnection();
+	          statement = connection.prepareStatement(sql);
+			  statement.setInt(1, boardNo); 
+	          rowCount = statement.executeUpdate();
+	      } catch (Exception e) {
+	          e.printStackTrace();
+	      } finally {
+	          this.close(connection, statement, null);
+	      }
+	      return rowCount;
+	  }
+    
     // 테이블 : board , 기능 : 한 페이지의 데이터 가져오기 
     public List<BoardVO> selectBoardListPerPage(int beginRow, int pagePerRow) {
         List<BoardVO> list = new ArrayList<BoardVO>();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
-        String sql = "SELECT board.board_no, board.board_title, board.board_date, user.user_id FROM board,user WHERE board.user_no = user.user_no ORDER BY board.board_date DESC LIMIT ?, ?";
+        String sql = "SELECT board.board_no, board.board_title, board.board_date, user.user_id, board.board_view FROM board,user WHERE board.user_no = user.user_no ORDER BY board.board_date DESC LIMIT ?, ?";
         try {
             connection = this.getConnection();
             statement = connection.prepareStatement(sql);
@@ -105,6 +127,7 @@ public class BoardDAO {
                 board.setBoardTitle(resultset.getString("board_title"));
                 board.setBoardDate(resultset.getString("board_date"));
                 board.setUserId(resultset.getString("user_id"));
+                board.setBoardView(resultset.getString("board_view"));
                 list.add(board);
             }
         } catch (Exception e) {

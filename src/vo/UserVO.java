@@ -1,10 +1,20 @@
-package service;
+package vo;
 
 public class UserVO {
+	
+	//유저 시퀀스
 	private int userNo;
+	
+	//유저 아이디
 	private String userId;
+	
+	//유저 비밀번호
 	private String userPw;
+	
+	//유저 이메일
 	private String userEmail;
+	
+	//유저 회원가입 날짜
 	private String userDate;
 	
 	public int getUserNo() {

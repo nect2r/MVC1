@@ -3,7 +3,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="service.*" %>
+<%@page import="dao.*"%>
+<%@page import="vo.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +42,7 @@ List<BoardVO> list = boardDao.selectBoardListPerPage(beginRow, pagePerRow);
                 <th>글쓴이</th>
                 <th>제목</th>
                 <th>날짜</th>
+                <th>조회수</th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +53,7 @@ List<BoardVO> list = boardDao.selectBoardListPerPage(beginRow, pagePerRow);
                     <td><%=b.getUserId()%></td>
                     <td><a href="<%=request.getContextPath()%>/board/boardView.jsp?boardNo=<%=b.getBoardNo()%>"><%=b.getBoardTitle()%></a></td>
                     <td><%=b.getBoardDate()%></td>
+                    <td style="text-align: center;"><%=b.getBoardView()%></td>
                 </tr>
 <%        
             }
@@ -59,7 +62,7 @@ List<BoardVO> list = boardDao.selectBoardListPerPage(beginRow, pagePerRow);
     </table>
  
     <div>
-        <a href="<%=request.getContextPath()%>/board/boardAddForm.jsp">게시글 입력</a>
+        <a href="<%=request.getContextPath()%>/board/boardAddForm.jsp?userNo=${sessionScope.user.userNo }">게시글 입력</a>
     </div>
 <%
     int lastPage = totalRowCount/pagePerRow;

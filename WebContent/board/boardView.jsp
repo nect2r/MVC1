@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-<%@ page import="service.*" %>
+<%@page import="dao.*"%>
+<%@page import="vo.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +19,7 @@ if(request.getParameter("boardNo") == null) {
     int boardNo = Integer.parseInt(request.getParameter("boardNo"));
     BoardDAO boardDao = new BoardDAO();
     BoardVO board = boardDao.selectBoardByKey(boardNo);
+    int resultCount = boardDao.updateBoardByViewUp(boardNo);
     
     request.setAttribute("userId", board.getUserId());
 %>

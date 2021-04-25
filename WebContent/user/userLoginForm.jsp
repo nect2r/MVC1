@@ -15,6 +15,7 @@
 	    <div>
 	        <input type="submit" value="로그인"/>
 	        <input type="reset" value="초기화"/>
+	        <input type="button" value="게시글가기" onclick="location.href='<%=request.getContextPath()%>/board/boardList.jsp'"/>
 	    </div>
 	</form>
 </body>
