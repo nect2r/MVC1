@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>boardAddForm</title>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/base.css">
 </head>
 <body>
 <%

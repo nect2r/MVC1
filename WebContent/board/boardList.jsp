@@ -10,6 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>boardList</title>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/base.css">
 </head>
 <body>
 <h1>
@@ -23,7 +24,6 @@
 		</c:when>
 	</c:choose>
 </h1>
-<h1>boardList</h1>
 <%
 int currentPage = 1;
 if(request.getParameter("currentPage") != null) {

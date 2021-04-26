@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>userAddForm</title>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/base.css">
 </head>
 <body>
 	<form action="<%=request.getContextPath()%>/user/userAddAction.jsp" method="post">

@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>boardView</title>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/base.css">
 </head>
 <body>
 <h1>boardView</h1>
@@ -23,16 +24,12 @@ if(request.getParameter("boardNo") == null) {
     
     request.setAttribute("userId", board.getUserId());
 %>
-    <div>board_no :</div>
-    <div><%=board.getBoardNo()%></div>
-    <div>board_title :</div>
-    <div><%=board.getBoardTitle()%></div>
-    <div>board_content :</div>
-    <div><%=board.getBoardContent()%></div>
-    <div>board_date :</div>
-    <div><%=board.getBoardDate()%></div>
-    <div>user_id :</div>
-    <div><%=board.getUserId()%></div>
+    <div></div>
+    <div>board_no : <%=board.getBoardNo()%></div>
+    <div>board_title : <%=board.getBoardTitle()%></div>
+    <div>board_content : <%=board.getBoardContent()%></div>
+    <div>board_date : <%=board.getBoardDate()%></div>
+    <div>user_id : <%=board.getUserId()%></div>
     <div>
     	<c:choose>
 			<c:when test="${sessionScope.user.userId == userId}">

@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>userLoginForm</title>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/base.css">
 </head>
 <body>
 	<form action="<%=request.getContextPath()%>/user/userLoginAction.jsp" method="post">
